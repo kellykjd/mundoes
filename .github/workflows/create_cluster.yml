@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
 
 env:
+  PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
   HOSTNAME: ${{ secrets.HOST_NAME }}
   USER: ${{ secrets.USER }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
