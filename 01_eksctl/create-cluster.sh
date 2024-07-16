@@ -2,7 +2,7 @@
 
 # Variables
 CLUSTER_NAME=mundoes-cluster-G6
-AWS_REGION=us-east-2
+AWS_REGION=us-east-1
 
 # Set AWS credentials 
 aws sts get-caller-identity >> /dev/null
@@ -15,13 +15,13 @@ then
   --name $CLUSTER_NAME \
   --region $AWS_REGION \
   --nodes 3 \
-  --node-type t2.small \
+  --node-type t3.small \
   --with-oidc \
   --ssh-access \
-  --ssh-public-key jenkins \
+  --ssh-public-key pin \
   --managed \
   --full-ecr-access \
-  --zones us-east-2a,us-east-2b,us-east-2c
+  --zones us-east-1a,us-east-1b,us-east-1c
 
   if [ $? -eq 0 ]
   then
