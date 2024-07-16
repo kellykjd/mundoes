@@ -5,8 +5,8 @@ on:
 
 env:
   PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-  HOSTNAME: ec2-3-91-23-199.compute-1.amazonaws.com
-  USER: ubuntu
+  HOSTNAME: ${{ secrets.HOST_NAME }}
+  USER: ${{ secrets.USER }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
