@@ -1,5 +1,14 @@
-kubectl create namespace grafana
+#!/bin/bash
 
+# Variables
+KUBECTL_PATH=/home/ubuntu/bin/kubectl
+
+#1- Create grafana namespace
+echo "Create grafana namespace"
+$KUBECTL_PATH create namespace grafana
+
+#2-Install grafana
+echo "Install grafana"
 helm install grafana grafana/grafana \
     --namespace grafana \
     --set persistence.storageClassName="gp2" \
