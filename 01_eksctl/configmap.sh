@@ -1,9 +1,5 @@
 #!/bin/bash
 
-aws eks --region us-east-1 update-kubeconfig --name mundoes-cluster-G6
-kubectl get svc
-aws configure --profile  mundose-aws-user
-aws eks --region us-east-1 update-kubeconfig --name mundoes-cluster-G6 --profile mundose-aws-user
 kubectl get nodes
 
 
@@ -16,8 +12,8 @@ kubectl get nodes
 #mapUsers: |
 #	- groups:
 #		- system:masters
-#		userarn:  $ARN_AWS_USER
-#		username: $AWS_USER
+#		userarn:  mundose-aws-user
+#		username: arn:aws:iam::710500364490:user/mundose-aws-user
       
 #2- Check config
 #echo "Checking configuration..."
