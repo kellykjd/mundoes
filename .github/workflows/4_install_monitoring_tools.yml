@@ -42,7 +42,7 @@ jobs:
           # SSH into the EC2 instance and run the configmap script
           echo "Running prometheus-deploy script on EC2 instance..."
           ssh -o StrictHostKeyChecking=no -i private_key "${USER}@${HOSTNAME}" "
-            chmod +x /home/${USER}/configmap.sh &&
+            chmod +x /home/${USER}/prometheus-deploy.sh &&
             /home/${USER}/prometheus-deploy.sh
           "
  
