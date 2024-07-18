@@ -1,4 +1,4 @@
-name: Deploy
+name: 1_setup_ec2
 
 on: 
   workflow_dispatch:
@@ -7,6 +7,9 @@ env:
   PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
   HOSTNAME: ${{ secrets.HOST_NAME }}
   USER: ${{ secrets.USER }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
 
 jobs:
   Deploy:

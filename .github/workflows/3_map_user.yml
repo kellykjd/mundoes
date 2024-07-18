@@ -1,4 +1,4 @@
-name: Deploy
+name: 3_map_user
 
 on: 
   workflow_dispatch:

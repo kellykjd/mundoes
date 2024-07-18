@@ -1,4 +1,4 @@
-name: Deploy
+name: 2_create_cluster
 
 on: 
   workflow_dispatch:
