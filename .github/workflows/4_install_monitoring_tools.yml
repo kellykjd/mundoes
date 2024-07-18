@@ -22,9 +22,13 @@ jobs:
       - name: Upload and run prometheus-deploy and grafana-deploy scripts on EC2
         run: |          
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          
-          # Copy the prometheus-deploy script to the EC2 instance
-          echo "Copying prometheus-deploy script to EC2 instance..."
+
+          # Copy the grafana-deploy script to the EC2 instance
+          echo "Copying grafana-deploy script to EC2 instance..."
+          scp -o StrictHostKeyChecking=no -i private_key ./04_monitoreo/grafana-deploy.sh "${USER}@${HOSTNAME}:/home/${USER}/grafana-deploy.sh"
+
+          # Copy the grafana yml file to the EC2 instance
+          echo "Copying grafana yml file to EC2 instance..."
           scp -o StrictHostKeyChecking=no -i private_key ./04_monitoreo/grafana.yaml "${USER}@${HOSTNAME}:/home/${USER}/grafana.yaml"
           
           # SSH into the EC2 instance and run the grafana-deploy script
