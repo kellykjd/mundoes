@@ -16,3 +16,4 @@ then
   echo "El usuario está habilitado para realizar consultas al cluster."
 else
   echo "El usuario no tiene acceso a datos del cluster."
+fi
