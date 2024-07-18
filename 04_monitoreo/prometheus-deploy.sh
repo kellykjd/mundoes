@@ -40,5 +40,5 @@ echo "Expose prometheus into the port 8080 on EC2 instance"
 $KUBECTL_PATH port-forward -n prometheus deploy/prometheus-server 8080:9090 --address 0.0.0.0
 
 # Desplegar Grafana en EKS
-echo "Deploy prometheus on EKS"
-chmod +x grafana-deploy.sh && grafana-deploy.sh
+#echo "Deploy prometheus on EKS"
+#chmod +x grafana-deploy.sh && grafana-deploy.sh
