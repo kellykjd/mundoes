@@ -1,4 +1,4 @@
-name: 3_install_monitoring_tools
+name: 4_install_monitoring_tools
 
 on: 
   workflow_dispatch:
