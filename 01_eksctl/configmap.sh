@@ -1,9 +1,13 @@
 #!/bin/bash
 
+kubectl version
+nginx -version
 kubectl edit -n kube-system configmap/aws-auth
 
 #1- Map user
 echo "Mapping $AWS_USER user"
+echo $AWS_USER
+
 mapUsers: |
 	- groups:
 		- system:masters

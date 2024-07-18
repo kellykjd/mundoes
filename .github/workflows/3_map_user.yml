@@ -28,7 +28,7 @@ jobs:
           scp -o StrictHostKeyChecking=no -i private_key ./01_eksctl/configmap.sh "${USER}@${HOSTNAME}:/home/${USER}/configmap.sh"
           
           # Verify the configmap file was copied correctly
-          echo "Verifying sconfigmap cript on EC2 instance..."
+          echo "Verifying configmap script on EC2 instance..."
           ssh -o StrictHostKeyChecking=no -i private_key "${USER}@${HOSTNAME}" "ls -l /home/${USER}/configmap.sh"
           
           # SSH into the EC2 instance and run the configmap script
