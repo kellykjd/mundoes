@@ -45,4 +45,3 @@ jobs:
             chmod +x /home/${USER}/prometheus-deploy.sh &&
             /home/${USER}/prometheus-deploy.sh
           "
- 

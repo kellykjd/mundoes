@@ -6,7 +6,7 @@ KUBECTL_PATH=/home/ubuntu/bin/kubectl
 
 #Instalación del driver EBS
 echo "Installing EBS drivers"
-kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.32"
+$KUBECTL_PATH apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.32"
 
 # Agregar repo de prometheus
 echo "Add prometheus repository"
@@ -22,7 +22,7 @@ helm repo update
 
 # Crear el namespace prometheus
 echo "Create prometheus namespace"
-KUBECTL_PATH create namespace prometheus
+$KUBECTL_PATH create namespace prometheus
 
 # Desplegar prometheus en EKS
 echo "Deploy prometheus on EKS"
@@ -33,11 +33,11 @@ helm install prometheus prometheus-community/prometheus \
 
 # Verificar la instalación de prometheus
 echo "Check prometheus installation"
-KUBECTL_PATH get all -n prometheus
+$KUBECTL_PATH get all -n prometheus
 
 # Exponer prometheus en la instancia de EC2 en el puerto 8080
 echo "Expose prometheus into the port 8080 on EC2 instance"
-KUBECTL_PATH port-forward -n prometheus deploy/prometheus-server 8080:9090 --address 0.0.0.0
+$KUBECTL_PATH port-forward -n prometheus deploy/prometheus-server 8080:9090 --address 0.0.0.0
 
 # Desplegar Grafana en EKS
 echo "Deploy prometheus on EKS"
