@@ -6,10 +6,11 @@ KUBECTL_PATH=/home/ubuntu/bin/kubectl
 CLUSTER_NAME=mundoes-cluster-G7
 AWS_REGION=us-east-1
 SERVICE_ACCOUNT_ROLE_ARN=arn:aws:iam::710500364490:role/driver_EBS_controller_EKS
+export AWS_DEFAULT_REGION=$AWS_REGION
 
 # Applying Amazon EBS CSI resources
 echo "Applying Amazon EBS CSI resources"
-$KUBECTL_PATH kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.32"
+$KUBECTL_PATH apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.32"
 
 # Create prometheus namespace
 echo "Create prometheus namespace"
