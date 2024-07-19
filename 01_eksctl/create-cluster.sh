@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-CLUSTER_NAME=mundoes-cluster-G7
+CLUSTER_NAME=mundoes-cluster-G6
 AWS_REGION=us-east-1
 
 # Set AWS credentials 
