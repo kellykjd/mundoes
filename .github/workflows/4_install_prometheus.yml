@@ -1,4 +1,4 @@
-name: 4_install_monitoring_tools
+name: 4_install_oprometheus
 
 on: 
   workflow_dispatch:
@@ -22,18 +22,18 @@ jobs:
       - name: Upload and run prometheus-deploy and grafana-deploy scripts on EC2
         run: |          
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-
-          # Copy the grafana-deploy script to the EC2 instance
-          echo "Copying grafana-deploy script to EC2 instance..."
-          scp -o StrictHostKeyChecking=no -i private_key ./04_monitoreo/grafana-deploy.sh "${USER}@${HOSTNAME}:/home/${USER}/grafana-deploy.sh"
-
-          # Copy the grafana yml file to the EC2 instance
-          echo "Copying grafana yml file to EC2 instance..."
-          scp -o StrictHostKeyChecking=no -i private_key ./04_monitoreo/grafana.yaml "${USER}@${HOSTNAME}:/home/${USER}/grafana.yaml"
           
-          # SSH into the EC2 instance and run the grafana-deploy script
-          echo "Running grafana-deploy script on EC2 instance..."
+          # Copy the prometheus-deploy script to the EC2 instance
+          echo "Copying prometheus-deploy script to EC2 instance..."
+          scp -o StrictHostKeyChecking=no -i private_key ./04_monitoreo/prometheus-deploy.sh "${USER}@${HOSTNAME}:/home/${USER}/prometheus-deploy.sh"
+          
+          # Verify the prometheus-deploy file was copied correctly
+          echo "Verifying prometheus-deploy script on EC2 instance..."
+          ssh -o StrictHostKeyChecking=no -i private_key "${USER}@${HOSTNAME}" "ls -l /home/${USER}/prometheus-deploy.sh"
+          
+          # SSH into the EC2 instance and run the prometheus-deploy script
+          echo "Running prometheus-deploy script on EC2 instance..."
           ssh -o StrictHostKeyChecking=no -i private_key "${USER}@${HOSTNAME}" "
-            chmod +x /home/${USER}/grafana-deploy.sh &&
-            /home/${USER}/grafana-deploy.sh
+            chmod +x /home/${USER}/prometheus-deploy.sh &&
+            /home/${USER}/prometheus-deploy.sh
           "
