@@ -1,4 +1,4 @@
-name: 4_install_oprometheus
+name: 4_install_prometheus
 
 on: 
   workflow_dispatch:
