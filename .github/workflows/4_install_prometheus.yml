@@ -19,7 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         
-      - name: Upload and run prometheus-deploy and grafana-deploy scripts on EC2
+      - name: Upload and run prometheus-deploy scripts on EC2
         run: |          
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           
