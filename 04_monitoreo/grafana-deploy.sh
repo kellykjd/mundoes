@@ -32,8 +32,8 @@ $KUBECTL_PATH get all -n grafana
 
 #7-Get Grafana Load Balancer URL
 echo "Get Grafana Load Balancer URL"
-export ELB=($KUBECTL_PATH get svc -n grafana grafana -o jsonpath=\'{.status.loadBalancer.ingress[0].hostname}\')
-echo "http://$ELB"
+export SERVICE_IP=$($KUBECTL_PATH get svc --namespace grafana grafana -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+echo "http://$SERVICE_IP"
 
 #7-Get Grafana Service Details
 echo "Get Grafana Service Details"
