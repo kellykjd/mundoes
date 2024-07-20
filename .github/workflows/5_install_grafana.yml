@@ -1,0 +1,43 @@
+name: 5_install_grafana
+
+on: 
+  workflow_dispatch:
+
+env:
+  PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  HOSTNAME: ${{ secrets.HOST_NAME }}
+  USER: ${{ secrets.USER }}
+  GRAFANA_PASSWORD: ${{ secrets.GRAFANA_PASSWORD_ADMIN }}
+  
+
+jobs:
+  Deploy:
+    name: 
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Upload grafana-deploy scripts on EC2
+        run: |          
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          
+          # Copy the grafana-deploy script to the EC2 instance
+          echo "Copying grafana-deploy script to EC2 instance..."
+          scp -o StrictHostKeyChecking=no -i private_key ./04_monitoreo/grafana-deploy.sh "${USER}@${HOSTNAME}:/home/${USER}/grafana-deploy.sh"
+          
+          # Verify the grafana-deploy file was copied correctly
+          echo "Verifying grafana-deploy script on EC2 instance..."
+          ssh -o StrictHostKeyChecking=no -i private_key "${USER}@${HOSTNAME}" "ls -l /home/${USER}/grafana-deploy.sh"
+
+          # Copy the grafana.yml file to the EC2 instance
+          echo "Copying the grafana.yml file to EC2 instance..."
+          scp -o StrictHostKeyChecking=no -i private_key ./04_monitoreo/grafana.yml "${USER}@${HOSTNAME}:/home/${USER}/grafana.yml"
+          
+          # SSH into the EC2 instance and run the grafana-deploy script
+          echo "Running grafana-deploy script on EC2 instance..."
+          ssh -o StrictHostKeyChecking=no -i private_key "${USER}@${HOSTNAME}" "
+            chmod +x /home/${USER}/grafana-deploy.sh &&
+            /home/${USER}/grafana-deploy.sh
+          "
