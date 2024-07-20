@@ -81,7 +81,3 @@ $KUBECTL_PATH describe serviceaccount ebs-csi-controller-sa -n kube-system
 # Verify Prometheus Pods Status Again
 echo "Verify Prometheus Pods Status Again"
 $KUBECTL_PATH get pods --namespace=prometheus
-
-# Set port forward
-echo "Set port forward"
-$KUBECTL_PATH port-forward -n prometheus deploy/prometheus-server 8080:9090 --address 0.0.0.0
