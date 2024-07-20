@@ -33,7 +33,7 @@ jobs:
 
           # Copy the grafana.yml file to the EC2 instance
           echo "Copying the grafana.yml file to EC2 instance..."
-          scp -o StrictHostKeyChecking=no -i private_key ./04_monitoreo/grafana.yml "${USER}@${HOSTNAME}:/home/${USER}/grafana.yml"
+          scp -o StrictHostKeyChecking=no -i private_key ./04_monitoreo/grafana.yaml "${USER}@${HOSTNAME}:/home/${USER}/grafana.yaml"
           
           # SSH into the EC2 instance and run the grafana-deploy script
           echo "Running grafana-deploy script on EC2 instance..."
