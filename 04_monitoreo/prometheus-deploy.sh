@@ -30,14 +30,33 @@ helm install alertmanager prometheus-community/alertmanager --namespace promethe
 echo "Verify Prometheus Pods Status"
 $KUBECTL_PATH get pods --namespace=prometheus
 
-#Deployar de ser necesrio el yaml de volume_persistant
+# Set storageClass to storage-alertmanager-0 pvc
+echo "Set storageClass to storage-alertmanager-0 pvc"
+$KUBECTL_PATH patch pvc -n prometheus storage-alertmanager-0 -p '{"spec": {"storageClassName": "gp2"}}'
+
+# Set storageClass to storage-prometheus-alertmanager-0 pvc
+echo "Set storageClass to storage-prometheus-alertmanager-0 pvc"
+$KUBECTL_PATH patch pvc -n prometheus storage-prometheus-alertmanager-0 -p '{"spec": {"storageClassName": "gp2"}}'
+
+# Set storageClass to prometheus-server pvc
+echo "Set storageClass to prometheus-server pvc"
+$KUBECTL_PATH patch pvc -n prometheus prometheus-server -p '{"spec": {"storageClassName": "gp2"}}'
 
 # Create IAM OIDC Provider
 echo "Create IAM OIDC Provider"
 eksctl upgrade cluster --name $CLUSTER_NAME --approve
 eksctl utils associate-iam-oidc-provider --region=$AWS_REGION --cluster=$CLUSTER_NAME --approve
 
-#Crear el rol (driver_EBS_controller_EKS)
+# Create the driver_EBS_controller_EKS role
+echo "Create the driver_EBS_controller_EKS role"
+eksctl create iamserviceaccount \
+  --name ebs-csi-controller-sa \
+  --namespace kube-system \
+  --cluster $CLUSTER_NAME \
+  --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
+  --approve \
+  --role-only \
+  --role-name driver_EBS_controller_EKS
 
 # Check Amazon EBS CSI Driver Addon Versions
 echo "Check Amazon EBS CSI Driver Addon Versions"
@@ -55,6 +74,14 @@ eksctl get addon --name aws-ebs-csi-driver --cluster $CLUSTER_NAME
 echo "Update EBS CSI Driver Addon"
 eksctl upgrade cluster --name $CLUSTER_NAME --approve
 
+# Verify service account
+echo "Verify service account"
+$KUBECTL_PATH describe serviceaccount ebs-csi-controller-sa -n kube-system
+
 # Verify Prometheus Pods Status Again
 echo "Verify Prometheus Pods Status Again"
 $KUBECTL_PATH get pods --namespace=prometheus
+
+# Set port forward
+echo "Set port forward"
+$KUBECTL_PATH port-forward -n prometheus deploy/prometheus-server 8080:9090 --address 0.0.0.0
