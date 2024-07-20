@@ -30,10 +30,14 @@ helm install alertmanager prometheus-community/alertmanager --namespace promethe
 echo "Verify Prometheus Pods Status"
 $KUBECTL_PATH get pods --namespace=prometheus
 
+#Deployar de ser necesrio el yaml de volume_persistant
+
 # Create IAM OIDC Provider
 echo "Create IAM OIDC Provider"
 eksctl upgrade cluster --name $CLUSTER_NAME --approve
 eksctl utils associate-iam-oidc-provider --region=$AWS_REGION --cluster=$CLUSTER_NAME --approve
+
+#Crear el rol (driver_EBS_controller_EKS)
 
 # Check Amazon EBS CSI Driver Addon Versions
 echo "Check Amazon EBS CSI Driver Addon Versions"
